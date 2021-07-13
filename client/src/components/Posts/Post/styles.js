@@ -50,7 +50,7 @@ export default makeStyles({
     },
 
     title: {
-        padding: '0 16px',
+        padding: '0 0',
     },
 
     cardActions: {
