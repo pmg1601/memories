@@ -3,7 +3,6 @@ import {
     Card,
     CardActions,
     CardContent,
-    CardTitle,
     CardMedia,
     Button,
     Typography,
