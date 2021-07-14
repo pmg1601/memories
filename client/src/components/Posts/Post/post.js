@@ -13,11 +13,14 @@ import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
+import useStyles from './styles'
+import { useDispatch } from 'react-redux'
 
-import UseStyles from './styles'
+import { deletePost, likePost } from '../../../actions/posts'
 
-const post = ({ post, setCurrentId }) => {
-    const classes = UseStyles()
+const Post = ({ post, setCurrentId }) => {
+    const classes = useStyles()
+    const dispatch = useDispatch()
 
     return (
         <Card className={classes.card}>
@@ -49,8 +52,10 @@ const post = ({ post, setCurrentId }) => {
 
             <div className={classes.details}>
                 <Typography variant='body2' color='textSecondary'>
-                    {post.tags[0].split(', ').map((tag) => `#${tag} `)}
+                    {/* {post.tags[0].split(',').map((tag) => `#${tag.trim()} `)} */}
+                    {post.tags.map((tag) => `#${tag} `)}
                 </Typography>
+
                 <Typography
                     variant='body2'
                     color='textSecondary'
@@ -64,17 +69,33 @@ const post = ({ post, setCurrentId }) => {
                     {post.title}
                 </Typography>
 
-                <Typography className={classes.title} variant='p' gutterBottom>
+                <Typography
+                    className={classes.title}
+                    variant='body2'
+                    color='textSecondary'
+                    component='p'>
                     {post.message}
                 </Typography>
             </CardContent>
 
             <CardActions className={classes.cardActions}>
-                <Button size='small' color='primary' onClick={() => {}}>
-                    <ThumbUpAltIcon fontSize='small' /> {post.likeCount}
+                <Button
+                    size='small'
+                    color='primary'
+                    onClick={() => {
+                        dispatch(likePost(post._id))
+                    }}>
+                    <ThumbUpAltIcon
+                        fontSize='small'
+                        style={{ marginRight: '5px' }}
+                    />{' '}
+                    {post.likeCount}
                 </Button>
 
-                <Button size='small' color='primary' onClick={() => {}}>
+                <Button
+                    size='small'
+                    color='primary'
+                    onClick={() => dispatch(deletePost(post._id))}>
                     <DeleteIcon fontSize='small' /> Delete
                 </Button>
             </CardActions>
@@ -82,4 +103,4 @@ const post = ({ post, setCurrentId }) => {
     )
 }
 
-export default post
+export default Post

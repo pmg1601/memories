@@ -4,6 +4,8 @@ This is a MERN Stack project that stores some posts and deal with some operation
 
 ## Folder & File Structure
 
+---
+
 > Client
 
 `Client side deals with frontend and content management`
@@ -19,10 +21,14 @@ This is a MERN Stack project that stores some posts and deal with some operation
 | images       | Contains images                                                 |
 | reducers     | Accepts action call and perform some operations for it and data |
 
+<br>
+
 | File Name | Description                                                  |
 | --------- | ------------------------------------------------------------ |
 | App.js    | Main Component                                               |
 | index.js  | Deals with store and other functionality for `App` Component |
+
+<br>
 
 > Server
 
@@ -34,6 +40,21 @@ This is a MERN Stack project that stores some posts and deal with some operation
 | models      | Contains Schema for database collections                        |
 | routes      | Contains routes for defined path and what to do on those routes |
 
+<br>
+
 | File Name | Description                           |
 | --------- | ------------------------------------- |
 | index.js  | Express routing, db setup, page setup |
+
+<br>
+
+## The Flow
+
+---
+
+1. In `server/routes` - Set a route and import functionality from controllers.
+2. In `server/controllers` - Set functionality for the route like db validation and operations. Return a response.
+3. In `client/api` - Mention an API call.
+4. In `client/actions` - Make an API call, retrieve data and dispatch the action.
+5. In `client/reducers` - Get a dispatch Call and perform operations according to it.
+6. In `client/index.js` - Use the reducers to create store with thunk middleware.

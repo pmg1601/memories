@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { createPost, updatePost } from '../../actions/posts'
 
-import UseStyles from './styles'
+import useStyles from './styles'
 
 const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
@@ -20,7 +20,7 @@ const Form = ({ currentId, setCurrentId }) => {
         currentId ? state.posts.find((p) => p._id === currentId) : null
     )
 
-    const classes = UseStyles()
+    const classes = useStyles()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -59,6 +59,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 <Typography variant='h6'>
                     {currentId ? 'Editing' : 'Creating'} a Memory
                 </Typography>
+
                 <TextField
                     name='creator'
                     variant='outlined'
@@ -66,7 +67,10 @@ const Form = ({ currentId, setCurrentId }) => {
                     fullWidth
                     value={postData.creator}
                     onChange={(e) =>
-                        setPostData({ ...postData, creator: e.target.value })
+                        setPostData({
+                            ...postData,
+                            creator: e.target.value,
+                        })
                     }
                 />
 
@@ -99,7 +103,12 @@ const Form = ({ currentId, setCurrentId }) => {
                     fullWidth
                     value={postData.tags}
                     onChange={(e) =>
-                        setPostData({ ...postData, tags: e.target.value })
+                        setPostData({
+                            ...postData,
+                            tags: e.target.value
+                                .split(',')
+                                .map((tag) => tag.trim()),
+                        })
                     }
                 />
 
@@ -122,6 +131,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     fullWidth>
                     Submit
                 </Button>
+
                 <Button
                     variant='contained'
                     color='secondary'
