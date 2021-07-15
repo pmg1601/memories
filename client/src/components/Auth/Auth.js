@@ -14,7 +14,6 @@ import Input from './Input'
 
 const Auth = () => {
     const classes = useStyles()
-    // const isSignup = true
 
     const [isSignup, setIsSignup] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
