@@ -31,8 +31,10 @@ const Post = ({ post, setCurrentId }) => {
                 }
                 title={post.title}
             />
+
             <div className={classes.overlay}>
                 <Typography variant='h6'>{post.creator}</Typography>
+
                 <Typography variant='body2'>
                     {moment(post.createdAt).fromNow()}
                 </Typography>
@@ -87,15 +89,15 @@ const Post = ({ post, setCurrentId }) => {
                     <ThumbUpAltIcon
                         fontSize='small'
                         style={{ marginRight: '5px' }}
-                    />{' '}
-                    {post.likeCount}
+                    />
+                    &nbsp; {post.likeCount}
                 </Button>
 
                 <Button
                     size='small'
                     color='primary'
                     onClick={() => dispatch(deletePost(post._id))}>
-                    <DeleteIcon fontSize='small' /> Delete
+                    <DeleteIcon fontSize='small' />
                 </Button>
             </CardActions>
         </Card>

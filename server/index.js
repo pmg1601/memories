@@ -29,6 +29,6 @@ mongoose
             console.log(`Server running at http://127.0.0.1:${PORT}`)
         )
     )
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(`${error} did not connect`))
 
 mongoose.set('useFindAndModify', false)

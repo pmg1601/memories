@@ -12,7 +12,6 @@ const Posts = ({ setCurrentId }) => {
         <CircularProgress />
     ) : (
         <Grid
-            key={1}
             className={classes.container}
             container
             alignItems='stretch'

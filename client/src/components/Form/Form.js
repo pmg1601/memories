@@ -16,12 +16,12 @@ const Form = ({ currentId, setCurrentId }) => {
         selectedFile: '',
     })
 
+    const classes = useStyles()
+    const dispatch = useDispatch()
+
     const post = useSelector((state) =>
         currentId ? state.posts.find((p) => p._id === currentId) : null
     )
-
-    const classes = useStyles()
-    const dispatch = useDispatch()
 
     useEffect(() => {
         if (post) setPostData(post)
@@ -39,7 +39,7 @@ const Form = ({ currentId, setCurrentId }) => {
     }
 
     const clear = () => {
-        setCurrentId(null)
+        setCurrentId(0)
         setPostData({
             creator: '',
             title: '',
@@ -57,7 +57,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 className={`${classes.root} ${classes.form}`}
                 onSubmit={handleSubmit}>
                 <Typography variant='h6'>
-                    {currentId ? 'Editing' : 'Creating'} a Memory
+                    {currentId ? `Editing${post.title}` : 'Creating'} a Memory
                 </Typography>
 
                 <TextField
@@ -90,6 +90,7 @@ const Form = ({ currentId, setCurrentId }) => {
                     variant='outlined'
                     label='Message'
                     fullWidth
+                    multiline
                     value={postData.message}
                     onChange={(e) =>
                         setPostData({ ...postData, message: e.target.value })
@@ -135,7 +136,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 <Button
                     variant='contained'
                     color='secondary'
-                    size='small'
+                    size='large'
                     onClick={clear}
                     fullWidth>
                     Clear
