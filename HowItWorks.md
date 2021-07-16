@@ -1,6 +1,7 @@
 # Memories
 
 This is a MERN Stack project that stores some posts and deal with some operations on that post.
+Used O-Auth from Google.
 
 ## Folder & File Structure
 

@@ -2,6 +2,7 @@ import express from 'express'
 // import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import colors from 'colors'
 import dotenv from 'dotenv'
 import postRoutes from './routes/postsRoutes.js'
 
@@ -19,16 +20,25 @@ app.get('/', (req, res) => {
 
 const PORT = process.env.PORT || 5000
 
+// mongodb+srv://pratik:pratik123@memories-cluster.kbkgr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+// mongodb://localhost:27017
+
 mongoose
     .connect(process.env.CONNECTION_URI, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     })
-    .then(() =>
+    .then(() => {
         app.listen(PORT, () =>
-            console.log(`Server running at http://127.0.0.1:${PORT}`)
+            console.log(
+                `Server running at http://127.0.0.1:${PORT}`.yellow.bold
+            )
         )
-    )
+        console.log(
+            `\nConnected to MongoDB : ${process.env.CONNECTION_URI}`.green
+                .underline
+        )
+    })
     .catch((error) => console.log(`${error} did not connect`))
 
 mongoose.set('useFindAndModify', false)
