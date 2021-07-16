@@ -1,10 +1,10 @@
 import express from 'express'
-// import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import colors from 'colors'
 import dotenv from 'dotenv'
 import postRoutes from './routes/postsRoutes.js'
+import userRoutes from './routes/userRoutes.js'
 
 const app = express()
 dotenv.config()
@@ -14,6 +14,8 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
 app.use('/posts', postRoutes)
+app.use('/user', userRoutes)
+
 app.get('/', (req, res) => {
     res.send('Hello to memories API')
 })

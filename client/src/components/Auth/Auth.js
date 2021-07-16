@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import {
     Avatar,
     Button,
@@ -7,13 +6,21 @@ import {
     Typography,
     Container,
 } from '@material-ui/core'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+
+import React, { useState } from 'react'
 import { GoogleLogin } from 'react-google-login'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Icon from './Icon'
 import useStyles from './styles'
 import Input from './Input'
-import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { signin, signup } from '../../actions/auth'
+
+const intialState = {
+    firstName: '', lastName: '', email: '', password: '', confirmPassword: '',
+}
 
 const Auth = () => {
     const classes = useStyles()
@@ -22,19 +29,41 @@ const Auth = () => {
 
     const [isSignup, setIsSignup] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
+    const [formData, setFormData] = useState(intialState)
 
-    const handleSubmit = () => {}
 
-    const handleChange = () => {}
+    /* ----------------------- Handle Sign in button event ---------------------- */
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(formData)
 
+        if (isSignup) {
+            dispatch(signup(formData, history))
+        } else {
+            dispatch(signin(formData, history))
+        }
+    }
+
+
+    /* ------------------ Handle Input given in the field value ----------------- */
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
+
+
+    /* -------------- Switch cards between "sign in" and "sign up" -------------- */
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup)
         handleShowPassword(false)
     }
 
+
+    /* ------------- Password field "Eye" Button - Toggle visibility ------------ */
     const handleShowPassword = () =>
         setShowPassword((prevShowPassword) => !prevShowPassword)
 
+
+    /* ----------- If Google login is successful, dispatch AUTH action ---------- */
     const GoogleSuccess = async (res) => {
         const result = res?.profileObj
         const token = res?.tokenId
@@ -46,14 +75,19 @@ const Auth = () => {
         }
     }
 
+
+    /* ------------------- If Google Sign in is unsuccessful! ------------------- */
     const GoogleFailure = () => {
         console.log('Google Sign In was unsuccessful! Try Again Later.')
     }
 
+
+    /* ---------------------- Actual Components and screen ---------------------- */
     return (
         <div>
             <Container component='main' maxWidth='xs'>
                 <Paper className={classes.paper} elevation={3}>
+
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
                     </Avatar>
@@ -63,6 +97,7 @@ const Auth = () => {
                     </Typography>
 
                     <form className={classes.form} onSubmit={handleSubmit}>
+
                         <Grid container spacing={2}>
                             {isSignup && (
                                 <>
@@ -75,8 +110,8 @@ const Auth = () => {
                                     />
 
                                     <Input
-                                        name='firstName'
-                                        label='First Name'
+                                        name='lastName'
+                                        label='Last Name'
                                         handleChange={handleChange}
                                         half
                                     />
