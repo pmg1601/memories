@@ -59,3 +59,7 @@ Used O-Auth from Google.
 4. In `client/actions` - Make an API call, retrieve data and dispatch the action.
 5. In `client/reducers` - Get a dispatch Call and perform operations according to it.
 6. In `client/index.js` - Use the reducers to create store with thunk middleware.
+
+
+__In Short__:
+We fill in the sigin information => Dispatch an action => API call => HTML request and get some data => dispatch data to reducers

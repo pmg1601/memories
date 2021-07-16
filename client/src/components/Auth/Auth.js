@@ -19,7 +19,11 @@ import Input from './Input'
 import { signin, signup } from '../../actions/auth'
 
 const intialState = {
-    firstName: '', lastName: '', email: '', password: '', confirmPassword: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
 }
 
 const Auth = () => {
@@ -30,7 +34,6 @@ const Auth = () => {
     const [isSignup, setIsSignup] = useState(false)
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState(intialState)
-
 
     /* ----------------------- Handle Sign in button event ---------------------- */
     const handleSubmit = (e) => {
@@ -44,24 +47,20 @@ const Auth = () => {
         }
     }
 
-
     /* ------------------ Handle Input given in the field value ----------------- */
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-
     /* -------------- Switch cards between "sign in" and "sign up" -------------- */
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup)
-        handleShowPassword(false)
+        setShowPassword(false)
     }
-
 
     /* ------------- Password field "Eye" Button - Toggle visibility ------------ */
     const handleShowPassword = () =>
         setShowPassword((prevShowPassword) => !prevShowPassword)
-
 
     /* ----------- If Google login is successful, dispatch AUTH action ---------- */
     const GoogleSuccess = async (res) => {
@@ -75,19 +74,16 @@ const Auth = () => {
         }
     }
 
-
     /* ------------------- If Google Sign in is unsuccessful! ------------------- */
     const GoogleFailure = () => {
         console.log('Google Sign In was unsuccessful! Try Again Later.')
     }
-
 
     /* ---------------------- Actual Components and screen ---------------------- */
     return (
         <div>
             <Container component='main' maxWidth='xs'>
                 <Paper className={classes.paper} elevation={3}>
-
                     <Avatar className={classes.avatar}>
                         <LockOutlinedIcon />
                     </Avatar>
@@ -97,7 +93,6 @@ const Auth = () => {
                     </Typography>
 
                     <form className={classes.form} onSubmit={handleSubmit}>
-
                         <Grid container spacing={2}>
                             {isSignup && (
                                 <>

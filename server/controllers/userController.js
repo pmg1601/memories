@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import User from '../models/userModel.js'
 
 /* ------------------- Check existign user and log then in ------------------ */
-export const sigin = async (req, res) => {
+export const signin = async (req, res) => {
     const { email, password } = req.body
 
     try {
@@ -33,7 +33,7 @@ export const sigin = async (req, res) => {
 }
 
 /* ------------------------- Create a new user in DB ------------------------ */
-export const sigup = async (req, res) => {
+export const signup = async (req, res) => {
     const { email, password, confirmPassword, firstName, lastName } = req.body
 
     try {

@@ -3,6 +3,7 @@
 import mongoose from 'mongoose'
 import PostMessage from '../models/postMessageModel.js'
 
+/* Get all posts */
 export const getPosts = async (req, res) => {
     try {
         const postMessages = await PostMessage.find()
@@ -12,6 +13,7 @@ export const getPosts = async (req, res) => {
     }
 }
 
+/* Get a single post - Depricated */
 export const getPost = async (req, res) => {
     const { id } = req.params
 
@@ -24,6 +26,7 @@ export const getPost = async (req, res) => {
     }
 }
 
+/* Create a post */
 export const createPost = async (req, res) => {
     const post = req.body
     const newPost = new PostMessage(post)
@@ -36,6 +39,7 @@ export const createPost = async (req, res) => {
     }
 }
 
+/* Update a post */
 export const updatePost = async (req, res) => {
     const { id } = req.params
     const post = req.body
@@ -50,6 +54,7 @@ export const updatePost = async (req, res) => {
     res.json(updatedPost)
 }
 
+/* Delete a post */
 export const deletePost = async (req, res) => {
     const { id } = req.params
 
@@ -61,19 +66,30 @@ export const deletePost = async (req, res) => {
     res.json({ message: 'Post Deleted Successfully!' })
 }
 
+/* Like a post */
 export const likePost = async (req, res) => {
     const { id } = req.params
+
+    if (!req.userId) return res.json({ message: 'Unaunthenticated!' })
 
     if (!mongoose.Types.ObjectId.isValid(id))
         return res.status(404).send(`No Post With ID: ${id}`)
 
     const post = await PostMessage.findById(id)
 
-    const updatedPost = await PostMessage.findByIdAndUpdate(
-        id,
-        { likeCount: post.likeCount + 1 },
-        { new: true }
-    )
+    const index = post.likes.findIndex((id) => id === String(req.userId))
+
+    if (index === -1) {
+        // Like the post
+        post.likes.push(req.userId)
+    } else {
+        // Remove the like from the post
+        post.likes = post.likes.filter((id) => id !== String(req.userId))
+    }
+
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, post, {
+        new: true,
+    })
 
     res.json(updatedPost)
 }

@@ -51,7 +51,7 @@ const Navbar = () => {
             <Toolbar className={classes.toolbar}>
                 {user ? (
                     <div className={classes.profile}>
-                        <Typography className={classes.username} variant='h6'>
+                        <Typography className={classes.userName} variant='h6'>
                             {user.result.name}
                         </Typography>
 
@@ -64,7 +64,7 @@ const Navbar = () => {
 
                         <Button
                             variant='contained'
-                            classname={classes.logout}
+                            className={classes.logout}
                             color='secondary'
                             onClick={logout}>
                             Logout
