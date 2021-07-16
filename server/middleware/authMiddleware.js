@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken'
  *  User clicks a like button => middleware authorization (next) => like controller
  */
 
+// Check if user is authorized
 const auth = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1]

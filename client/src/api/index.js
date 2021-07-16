@@ -2,6 +2,17 @@ import axios from 'axios'
 
 const API = axios.create({ baseURL: 'http://localhost:5000' })
 
+// Will happen before all the reqests
+API.interceptors.request.use((req) => {
+    if (localStorage.getItem('profile')) {
+        req.headers.Authorization = `Bearer ${
+            JSON.parse(localStorage.getItem('profile')).token
+        }`
+    }
+
+    return req
+})
+
 // const url = 'https://make-memories-project.herokuapp.com/posts'
 // const url = 'http://localhost:5000/posts'
 
