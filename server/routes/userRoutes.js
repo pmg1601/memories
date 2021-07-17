@@ -1,3 +1,7 @@
+/**
+ * All the route action for users (/users) and functionality actions
+ */
+
 import express from 'express'
 import { signin, signup } from '../controllers/userController.js'
 

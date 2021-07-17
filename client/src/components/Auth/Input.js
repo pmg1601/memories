@@ -1,7 +1,13 @@
+/**
+ * Input form Component for AUTH component for SignIn and SignUp Forms
+ */
+
 import React from 'react'
 import { TextField, Grid, InputAdornment, IconButton } from '@material-ui/core'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+
+/* -------------------------------------------------------------------------- */
 
 const Input = ({
     name,

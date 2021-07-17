@@ -1,3 +1,7 @@
+/**
+ * Styles for index.js page i.e. for complete app (I didn't get it why I used this!)
+ */
+
 import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles((theme) => ({

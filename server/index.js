@@ -1,3 +1,7 @@
+/**
+ * This is a main file that contains default routes, mongoDB connection
+ */
+
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
@@ -9,10 +13,12 @@ import userRoutes from './routes/userRoutes.js'
 const app = express()
 dotenv.config()
 
+// Initial setup
 app.use(express.json({ limit: '30mb', extended: true }))
 app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors())
 
+// Routes
 app.use('/posts', postRoutes)
 app.use('/users', userRoutes)
 
@@ -20,10 +26,8 @@ app.get('/', (req, res) => {
     res.send('Hello to memories API')
 })
 
+// DataBase (MongoDB-local) Connection
 const PORT = process.env.PORT || 5000
-
-// mongodb+srv://pratik:pratik123@memories-cluster.kbkgr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-// mongodb://localhost:27017
 
 mongoose
     .connect(process.env.CONNECTION_URI, {

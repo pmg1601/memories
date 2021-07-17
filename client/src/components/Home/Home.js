@@ -1,37 +1,137 @@
+/**
+ *  This is is Home Page Screen which shows posts, form to add and edit post,
+ *  login information, search form
+ */
+
 import React, { useEffect, useState } from 'react'
-import { Container, Grow, Grid } from '@material-ui/core'
+import {
+    Container,
+    Grow,
+    Grid,
+    Paper,
+    AppBar,
+    TextField,
+    Button,
+} from '@material-ui/core'
 import { useDispatch } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
+
+import ChipInput from 'material-ui-chip-input'
+import useStyles from './styles'
 
 import Form from '../Form/Form'
 import Posts from '../Posts/Posts'
-import { getPosts } from '../../actions/posts'
+import Paginate from '../Pagination'
+import { getPosts, getPostsBySearch } from '../../actions/posts'
+
+/* -------------------------------------------------------------------------- */
+
+function useQuery() {
+    return new URLSearchParams(useLocation().search)
+}
+
+/* -------------------------------------------------------------------------- */
 
 const Home = () => {
     const [currentId, setCurrentId] = useState(0)
+    const [search, setSearch] = useState('')
+    const [tags, setTags] = useState([])
+
     const dispatch = useDispatch()
+    const history = useHistory()
+
+    const query = useQuery()
+    const page = query.get('page') || 1
+    const searchQuery = query.get('searchQuery')
+    const classes = useStyles()
 
     useEffect(() => {
         dispatch(getPosts())
     }, [currentId, dispatch])
 
+    /* --------------------- Convert search tags to TAGS ... -------------------- */
+
+    const handleKeyPress = (e) => {
+        if (e.keyCode === 13 || e.keyCode === 32) {
+            searchPost()
+        }
+    }
+
+    /* --------------- Adding tags to list of tags to filter posts -------------- */
+
+    const handleAdd = (tag) => setTags([...tags, tag])
+
+    /* -------------- Remove tag from list of tags to filter posts -------------- */
+
+    const handleDelete = (tagToDelete) =>
+        setTags(tags.filter((tag) => tag !== tagToDelete))
+
+    /* ---------- Search post in all posts using search params or tags ---------- */
+
+    const searchPost = () => {
+        if (search.trim() || tags) {
+            dispatch(getPostsBySearch({ search, tags: tags.join(',') }))
+        } else {
+            history.push('/')
+        }
+    }
+
+    /* ---------------------------- Actual Home Page ---------------------------- */
     return (
         <div>
             <Grow in>
-                <Container>
+                <Container maxWidth='xl'>
                     <Grid
                         container
                         justifyContent='space-between'
                         alignItems='stretch'
-                        spacing={3}>
-                        <Grid item xs={12} sm={12} md={8}>
+                        spacing={3}
+                        onKeyPress={handleKeyPress}
+                        className={classes.gridContainer}>
+                        <Grid item xs={12} sm={8} md={8}>
                             <Posts setCurrentId={setCurrentId} />
                         </Grid>
 
-                        <Grid item xs={12} sm={6} md={4}>
+                        <Grid item xs={12} sm={4} md={4}>
+                            <AppBar
+                                className={classes.appBarSearch}
+                                position='static'
+                                color='inherit'>
+                                <TextField
+                                    name='search'
+                                    variant='outlined'
+                                    label='Search Memories'
+                                    fullWidth
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                />
+
+                                <ChipInput
+                                    style={{ margin: '10px 0' }}
+                                    value={tags}
+                                    onAdd={handleAdd}
+                                    onDelete={handleDelete}
+                                    label='Search Tags'
+                                    variant='outlined'
+                                />
+
+                                <Button
+                                    onClick={searchPost}
+                                    className={classes.searchButton}
+                                    variant='contained'
+                                    color='primary'>
+                                    Search
+                                </Button>
+                            </AppBar>
+
                             <Form
                                 currentId={currentId}
                                 setCurrentId={setCurrentId}
                             />
+
+                            <Paper elevation={6}>
+                                <Paginate />
+                            </Paper>
                         </Grid>
                     </Grid>
                 </Container>

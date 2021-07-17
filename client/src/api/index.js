@@ -1,3 +1,7 @@
+/**
+ * API calls from front-end to back-end
+ */
+
 import axios from 'axios'
 
 const API = axios.create({ baseURL: 'http://localhost:5000' })
@@ -16,14 +20,40 @@ API.interceptors.request.use((req) => {
 // const url = 'https://make-memories-project.herokuapp.com/posts'
 // const url = 'http://localhost:5000/posts'
 
+/* -------------------------------------------------------------------------- */
+/*                               Posts API calls                              */
+/* -------------------------------------------------------------------------- */
+
+// Fetch Posts
 export const fetchPosts = () => API.get('/posts')
+
+// Fetch posts using seach params and tags
+export const fetchPostsBySearch = (searchQuery) =>
+    API.get(
+        `/posts/search?searchQuery=${searchQuery.search || 'none'}&tags=${
+            searchQuery.tags
+        }`
+    )
+
+// Create a post
 export const createPost = (newPost) => API.post('/posts', newPost)
+
+// Update a post
 export const updatePost = (id, updatedPost) =>
     API.patch(`/posts/${id}`, updatedPost)
 
+// Delete a post (DELETE)
 export const deletePost = (id) => API.delete(`/posts/${id}`)
+
+// Like/Dislike a post (PATCH)
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`)
 
-// Sign in and Sign up routes
+/* -------------------------------------------------------------------------- */
+/*                               User API calls                               */
+/* -------------------------------------------------------------------------- */
+
+// Sign in the user
 export const signIn = (formData) => API.post('/users/signin', formData)
+
+// Sign up the user
 export const signUp = (formData) => API.post('/users/signup', formData)

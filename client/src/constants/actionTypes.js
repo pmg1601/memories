@@ -1,3 +1,5 @@
+/* ------------------ Constants used in disptching actions ------------------ */
+
 export const CREATE = 'CREATE'
 export const UPDATE = 'UPDATE'
 export const DELETE = 'DELETE'

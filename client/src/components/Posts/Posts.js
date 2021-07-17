@@ -1,10 +1,18 @@
+/**
+ * This component is for all posts container
+ */
+
 import React from 'react'
 import { Grid, CircularProgress } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 import Post from './Post/post.js'
 import useStyles from './styles'
 
+/* -------------------------------------------------------------------------- */
+
 const Posts = ({ setCurrentId }) => {
+    // There are some upadates here!
+
     const posts = useSelector((state) => state.posts)
     const classes = useStyles()
 
@@ -12,8 +20,8 @@ const Posts = ({ setCurrentId }) => {
         <CircularProgress />
     ) : (
         <Grid
-            className={classes.container}
             container
+            className={classes.container}
             alignItems='stretch'
             spacing={3}>
             {posts.map((post) => (

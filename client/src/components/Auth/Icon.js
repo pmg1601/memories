@@ -1,3 +1,5 @@
+// Google Icon for Sign in with Google
+
 import React from 'react'
 
 const icon = () => (

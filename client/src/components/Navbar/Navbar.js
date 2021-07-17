@@ -1,3 +1,7 @@
+/**
+ * Navbar component
+ */
+
 import React, { useEffect, useState } from 'react'
 import { AppBar, Avatar, Typography, Toolbar, Button } from '@material-ui/core'
 import { Link, useHistory, useLocation } from 'react-router-dom'
@@ -6,6 +10,8 @@ import decode from 'jwt-decode'
 
 import useStyles from './styles'
 import memories from '../../images/memories.png'
+
+/* -------------------------------------------------------------------------- */
 
 const Navbar = () => {
     const classes = useStyles()
@@ -39,6 +45,7 @@ const Navbar = () => {
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])
 
+    /* -------------------------- Actual Form Component ------------------------- */
     return (
         <AppBar className={classes.appBar} position='static' color='inherit'>
             <div className={classes.brandContainer}>

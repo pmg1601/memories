@@ -1,10 +1,12 @@
-import jwt from 'jsonwebtoken'
-
-// Do something and move to the next thing
-
-/** Auth Middle Ware
+/**
+ *  Auth Middle Ware
  *  User clicks a like button => middleware authorization (next) => like controller
  */
+
+import jwt from 'jsonwebtoken'
+
+import dotenv from 'dotenv'
+dotenv.config()
 
 // Check if user is authorized
 const auth = async (req, res, next) => {
@@ -15,15 +17,15 @@ const auth = async (req, res, next) => {
         let decodedData
 
         if (token && isCustomAuth) {
-            decodedData = jwt.verify(token, 'test')
+            decodedData = jwt.verify(token, process.env.MONGO_SECRET) // This is form login
 
-            req.userId = decodedData?.id
+            req.userId = decodedData?.id // Add userId to req
         } else {
-            decodedData = jwt.decode(token)
+            decodedData = jwt.decode(token) // This is google login
             req.userId = decodedData?.sub
         }
 
-        next()
+        next() // next - Do something and move to the next thing
     } catch (error) {
         console.log(error)
     }

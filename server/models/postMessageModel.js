@@ -1,4 +1,6 @@
-// This file contains mongoDB schema for the "posts"
+/**
+ * Model schema for posts
+ */
 
 import mongoose from 'mongoose'
 

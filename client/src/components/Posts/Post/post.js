@@ -1,3 +1,7 @@
+/**
+ * Individual Post Component
+ */
+
 import React from 'react'
 import {
     Card,
@@ -18,11 +22,14 @@ import useStyles from './styles'
 import { useDispatch } from 'react-redux'
 import { deletePost, likePost } from '../../../actions/posts'
 
+/* -------------------------------------------------------------------------- */
+
 const Post = ({ post, setCurrentId }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const user = JSON.parse(localStorage.getItem('profile'))
 
+    // This thing handles Likes/Dislikes (Component)
     const Likes = () => {
         if (post.likes.length > 0) {
             return post.likes.find(
@@ -54,6 +61,7 @@ const Post = ({ post, setCurrentId }) => {
         )
     }
 
+    /* -------------------------- Actual Post Component ------------------------- */
     return (
         <Card className={classes.card}>
             <CardMedia
@@ -91,13 +99,6 @@ const Post = ({ post, setCurrentId }) => {
                 <Typography variant='body2' color='textSecondary'>
                     {/* {post.tags[0].split(',').map((tag) => `#${tag.trim()} `)} */}
                     {post.tags.map((tag) => `#${tag} `)}
-                </Typography>
-
-                <Typography
-                    variant='body2'
-                    color='textSecondary'
-                    style={{ textAlign: 'right' }}>
-                    {moment(post.createdAt).calendar()}
                 </Typography>
             </div>
 

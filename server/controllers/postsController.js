@@ -1,9 +1,12 @@
-// This file contains functionality for routes for "posts"
+/**
+ * Posts Controller that handles - create, update, delete, retrieve operations.
+ * In Addition to this, it handles search by tags and keywords, like/dislike a post.
+ */
 
 import mongoose from 'mongoose'
 import PostMessage from '../models/postMessageModel.js'
 
-/* Get all posts */
+/* ------------------------------ Get all posts ----------------------------- */
 export const getPosts = async (req, res) => {
     try {
         const postMessages = await PostMessage.find()
@@ -13,7 +16,7 @@ export const getPosts = async (req, res) => {
     }
 }
 
-/* Get a single post - Depricated */
+/* --------------------- Get a single post - Depricated --------------------- */
 export const getPost = async (req, res) => {
     const { id } = req.params
 
@@ -26,7 +29,30 @@ export const getPost = async (req, res) => {
     }
 }
 
-/* Create a post */
+/* ------------------------- Get Posts by searching ------------------------- */
+export const getPostsBySearch = async (req, res) => {
+    const { searchQuery, tags } = req.query
+
+    try {
+        const title = new RegExp(searchQuery, 'i')
+        const posts = await PostMessage.find({
+            $or: [
+                { title },
+                {
+                    tags: {
+                        $in: tags.split(','),
+                    },
+                },
+            ],
+        })
+
+        res.json({ data: posts })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+/* ------------------------------ Create a post ----------------------------- */
 export const createPost = async (req, res) => {
     const post = req.body
     const newPost = new PostMessage({
@@ -43,7 +69,7 @@ export const createPost = async (req, res) => {
     }
 }
 
-/* Update a post */
+/* ------------------------------ Update a post ----------------------------- */
 export const updatePost = async (req, res) => {
     const { id } = req.params
     const post = req.body
@@ -58,7 +84,7 @@ export const updatePost = async (req, res) => {
     res.json(updatedPost)
 }
 
-/* Delete a post */
+/* ------------------------------ Delete a post ----------------------------- */
 export const deletePost = async (req, res) => {
     const { id } = req.params
 
@@ -70,7 +96,7 @@ export const deletePost = async (req, res) => {
     res.json({ message: 'Post Deleted Successfully!' })
 }
 
-/* Like a post */
+/* ------------------------------- Like a post ------------------------------ */
 export const likePost = async (req, res) => {
     const { id } = req.params
 

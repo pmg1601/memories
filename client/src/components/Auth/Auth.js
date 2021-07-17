@@ -1,3 +1,7 @@
+/**
+ * AUTH component
+ */
+
 import {
     Avatar,
     Button,
@@ -18,6 +22,7 @@ import useStyles from './styles'
 import Input from './Input'
 import { signin, signup } from '../../actions/auth'
 
+// Initial State of an auth form
 const intialState = {
     firstName: '',
     lastName: '',
@@ -25,6 +30,8 @@ const intialState = {
     password: '',
     confirmPassword: '',
 }
+
+/* -------------------------------------------------------------------------- */
 
 const Auth = () => {
     const classes = useStyles()
