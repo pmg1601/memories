@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { AppBar, Avatar, Typography, Toolbar, Button } from '@material-ui/core'
 import { Link, useHistory, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import decode from 'jwt-decode'
+
 import useStyles from './styles'
 import memories from '../../images/memories.png'
-import { useDispatch } from 'react-redux'
 
 const Navbar = () => {
     const classes = useStyles()
@@ -15,15 +17,24 @@ const Navbar = () => {
         JSON.parse(localStorage.getItem('profile'))
     )
 
+    /* ------------------- Logout from app and go to home page ------------------ */
     const logout = () => {
         dispatch({ type: 'LOGOUT' })
         history.push('/')
         setUser(null)
     }
 
+    /* ------------ Check is token is expired or not and logout user ------------ */
     useEffect(() => {
         const token = user?.token
-        // JWT ...
+
+        if (token) {
+            const decodedToken = decode(token)
+
+            if (decodedToken.exp * 1000 < new Date().getTime()) {
+                logout()
+            }
+        }
 
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location])
