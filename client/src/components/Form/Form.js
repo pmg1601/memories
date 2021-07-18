@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createPost, updatePost } from '../../actions/posts'
 
 import useStyles from './styles'
+import { useHistory } from 'react-router-dom'
 
 /* -------------------------------------------------------------------------- */
 
@@ -17,6 +18,7 @@ const Form = ({ currentId, setCurrentId }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
     const user = JSON.parse(localStorage.getItem('profile'))
+    const history = useHistory()
 
     const [postData, setPostData] = useState({
         title: '',
@@ -26,7 +28,7 @@ const Form = ({ currentId, setCurrentId }) => {
     })
 
     const post = useSelector((state) =>
-        currentId ? state.posts.find((p) => p._id === currentId) : null
+        currentId ? state.posts.posts.find((p) => p._id === currentId) : null
     )
 
     useEffect(() => {
@@ -53,7 +55,9 @@ const Form = ({ currentId, setCurrentId }) => {
                 updatePost(currentId, { ...postData, name: user?.result?.name })
             )
         } else {
-            dispatch(createPost({ ...postData, name: user?.result?.name }))
+            dispatch(
+                createPost({ ...postData, name: user?.result?.name }, history)
+            )
         }
         clear()
     }
@@ -71,7 +75,7 @@ const Form = ({ currentId, setCurrentId }) => {
 
     /* ------------------------- Actual Create Post Form ------------------------ */
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form
                 autoComplete='off'
                 noValidate

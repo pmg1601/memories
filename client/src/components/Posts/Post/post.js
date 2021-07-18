@@ -10,6 +10,7 @@ import {
     CardMedia,
     Button,
     Typography,
+    ButtonBase,
 } from '@material-ui/core'
 
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
@@ -17,9 +18,10 @@ import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined'
 import DeleteIcon from '@material-ui/icons/Delete'
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import moment from 'moment'
-import useStyles from './styles'
-
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+
+import useStyles from './styles'
 import { deletePost, likePost } from '../../../actions/posts'
 
 /* -------------------------------------------------------------------------- */
@@ -27,7 +29,15 @@ import { deletePost, likePost } from '../../../actions/posts'
 const Post = ({ post, setCurrentId }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const history = useHistory()
+
     const user = JSON.parse(localStorage.getItem('profile'))
+
+    const printSomething = () => {
+        console.log('Clicked Edit Button!')
+    }
+
+    const openPost = (e) => history.push(`/posts/${post._id}`)
 
     // This thing handles Likes/Dislikes (Component)
     const Likes = () => {
@@ -63,58 +73,70 @@ const Post = ({ post, setCurrentId }) => {
 
     /* -------------------------- Actual Post Component ------------------------- */
     return (
-        <Card className={classes.card}>
-            <CardMedia
-                className={classes.media}
-                image={
-                    post.selectedFile ||
-                    'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
-                }
-                title={post.title}
-            />
+        <Card className={classes.card} raised elevation={6}>
+            <ButtonBase
+                component='span'
+                name='test'
+                className={classes.cardAction}
+                onClick={openPost}>
+                <CardMedia
+                    className={classes.media}
+                    image={
+                        post.selectedFile ||
+                        'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'
+                    }
+                    title={post.title}
+                />
 
-            <div className={classes.overlay}>
-                <Typography variant='h6'>{post.name}</Typography>
+                <div className={classes.overlay}>
+                    <Typography variant='h6'>{post.name}</Typography>
 
-                <Typography variant='body2'>
-                    {moment(post.createdAt).fromNow()}
-                </Typography>
-            </div>
-
-            {(user?.result?.googleId === post?.creator ||
-                user?.result?._id === post?.creator) && (
-                <div className={classes.overlay2}>
-                    <Button
-                        style={{ color: 'white' }}
-                        size='small'
-                        onClick={() => {
-                            setCurrentId(post._id)
-                        }}>
-                        <MoreHorizIcon fontSize='medium' />
-                    </Button>
+                    <Typography variant='body2'>
+                        {moment(post.createdAt).fromNow()}
+                    </Typography>
                 </div>
-            )}
 
-            <div className={classes.details}>
-                <Typography variant='body2' color='textSecondary'>
-                    {/* {post.tags[0].split(',').map((tag) => `#${tag.trim()} `)} */}
-                    {post.tags.map((tag) => `#${tag} `)}
-                </Typography>
-            </div>
+                {(user?.result?.googleId === post?.creator ||
+                    user?.result?._id === post?.creator) && (
+                    <div className={classes.overlay2}>
+                        <Button
+                            style={{ color: 'white' }}
+                            size='small'
+                            onClick={() => {
+                                setCurrentId(post._id)
+                            }}>
+                            <MoreHorizIcon
+                                fontSize='medium'
+                                onClick={printSomething}
+                            />
+                        </Button>
+                    </div>
+                )}
 
-            <CardContent>
-                <Typography className={classes.title} variant='h4' gutterBottom>
-                    {post.title}
-                </Typography>
+                <div className={classes.details}>
+                    <Typography variant='body2' color='textSecondary'>
+                        {/* {post.tags[0].split(',').map((tag) => `#${tag.trim()} `)} */}
+                        {post.tags.map((tag) => `#${tag} `)}
+                    </Typography>
+                </div>
 
-                <Typography
-                    className={classes.title}
-                    variant='body2'
-                    color='textSecondary'
-                    component='p'>
-                    {post.message}
-                </Typography>
-            </CardContent>
+                <CardContent>
+                    <Typography
+                        className={classes.title}
+                        variant='h4'
+                        gutterBottom>
+                        {post.title}
+                    </Typography>
+
+                    <Typography
+                        className={classes.title}
+                        variant='body2'
+                        color='textSecondary'
+                        component='p'>
+                        {post.message}
+                    </Typography>
+                </CardContent>
+            </ButtonBase>
 
             <CardActions className={classes.cardActions}>
                 <Button

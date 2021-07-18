@@ -45,10 +45,6 @@ const Home = () => {
     const searchQuery = query.get('searchQuery')
     const classes = useStyles()
 
-    useEffect(() => {
-        dispatch(getPosts())
-    }, [currentId, dispatch])
-
     /* --------------------- Convert search tags to TAGS ... -------------------- */
 
     const handleKeyPress = (e) => {
@@ -70,7 +66,14 @@ const Home = () => {
 
     const searchPost = () => {
         if (search.trim() || tags) {
+            // console.log(tags)
+            // console.log(search)
             dispatch(getPostsBySearch({ search, tags: tags.join(',') }))
+            history.push(
+                `/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(
+                    ','
+                )}`
+            )
         } else {
             history.push('/')
         }
@@ -128,10 +131,14 @@ const Home = () => {
                                 currentId={currentId}
                                 setCurrentId={setCurrentId}
                             />
-
-                            <Paper elevation={6}>
-                                <Paginate />
-                            </Paper>
+                            {!searchQuery && !tags.length && (
+                                <Paper elevation={6}>
+                                    <Paginate
+                                        page={page}
+                                        className={classes.pagination}
+                                    />
+                                </Paper>
+                            )}
                         </Grid>
                     </Grid>
                 </Container>

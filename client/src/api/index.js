@@ -5,6 +5,9 @@
 import axios from 'axios'
 
 const API = axios.create({ baseURL: 'http://localhost:5000' })
+// const API = axios.create({
+//     baseURL: 'https://memories-are-best.herokuapp.com/',
+// })
 
 // Will happen before all the reqests
 API.interceptors.request.use((req) => {
@@ -25,7 +28,10 @@ API.interceptors.request.use((req) => {
 /* -------------------------------------------------------------------------- */
 
 // Fetch Posts
-export const fetchPosts = () => API.get('/posts')
+export const fetchPosts = (page) => API.get(`/posts?page=${page}`)
+
+// Fetch Post
+export const fetchPost = (id) => API.get(`/posts/${id}`)
 
 // Fetch posts using seach params and tags
 export const fetchPostsBySearch = (searchQuery) =>

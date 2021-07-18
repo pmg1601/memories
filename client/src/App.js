@@ -18,7 +18,7 @@ const App = () => {
 
     return (
         <BrowserRouter>
-            <Container maxwidth='xl'>
+            <Container maxWidth='xl'>
                 <Navbar />
                 <Switch>
                     {/* Routes for screens */}

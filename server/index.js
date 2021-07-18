@@ -22,6 +22,7 @@ app.use(cors())
 app.use('/posts', postRoutes)
 app.use('/users', userRoutes)
 
+// When we deploy backend
 app.get('/', (req, res) => {
     res.send('Hello to memories API')
 })
@@ -41,7 +42,7 @@ mongoose
             )
         )
         console.log(
-            `\nConnected to MongoDB : ${process.env.CONNECTION_URI}`.green
+            `\nConnected to MongoDB : ${process.env.CONNECTION_URI}`.blue
                 .underline
         )
     })
