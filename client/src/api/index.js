@@ -54,6 +54,10 @@ export const deletePost = (id) => API.delete(`/posts/${id}`)
 // Like/Dislike a post (PATCH)
 export const likePost = (id) => API.patch(`/posts/${id}/likePost`)
 
+// Comment on post
+export const comment = (value, id) =>
+    API.post(`/posts/${id}/commentPost`, { value })
+
 /* -------------------------------------------------------------------------- */
 /*                               User API calls                               */
 /* -------------------------------------------------------------------------- */

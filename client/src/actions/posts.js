@@ -10,6 +10,7 @@ import {
     UPDATE,
     CREATE,
     DELETE,
+    COMMENT,
     FETCH_BY_SEARCH,
     START_LOADING,
     END_LOADING,
@@ -120,6 +121,18 @@ export const likePost = (id) => async (dispatch) => {
         dispatch({ type: UPDATE, payload: data })
     } catch (error) {
         console.log(error)
+    }
+}
+
+/* ------------------------------ Comment Post ------------------------------ */
+export const commentPost = (value, id) => async (dispatch) => {
+    try {
+        const { data } = await api.comment(value, id)
+        dispatch({ type: COMMENT, payload: data })
+
+        return data.comments
+    } catch (error) {
+        console.log(error.message)
     }
 }
 

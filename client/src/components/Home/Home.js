@@ -3,7 +3,7 @@
  *  login information, search form
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
     Container,
     Grow,
@@ -22,7 +22,7 @@ import useStyles from './styles'
 import Form from '../Form/Form'
 import Posts from '../Posts/Posts'
 import Paginate from '../Pagination'
-import { getPosts, getPostsBySearch } from '../../actions/posts'
+import { getPostsBySearch } from '../../actions/posts'
 
 /* -------------------------------------------------------------------------- */
 

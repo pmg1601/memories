@@ -16,6 +16,7 @@ import {
     LIKE,
     START_LOADING,
     END_LOADING,
+    COMMENT,
 } from '../constants/actionTypes'
 
 /* -------------------------------------------------------------------------- */
@@ -52,6 +53,20 @@ const postReducer = (state = { isLoading: true, posts: [] }, action) => {
                 posts: state.posts.map((post) =>
                     post._id === action.payload._id ? action.payload : post
                 ),
+            }
+
+        case COMMENT:
+            return {
+                ...state,
+                posts: state.posts.map((post) => {
+                    //return all other posts normally
+                    if (post._id === action.payload._id) {
+                        return action.payload
+                    }
+
+                    // return updated commented post
+                    return post
+                }),
             }
 
         case DELETE:
