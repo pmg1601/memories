@@ -5,3 +5,9 @@
 body {
     background-color: #f7f8fc;
 }
+
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 0.7rem;
+    }
+}

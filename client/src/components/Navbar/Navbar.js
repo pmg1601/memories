@@ -54,11 +54,11 @@ const Navbar = () => {
                     src={text}
                     alt='icon'
                     height='45px'
-                    className={classes.image}
+                    className={classes.textImage}
                 />
 
                 <img
-                    className={classes.image}
+                    className={classes.logoImage}
                     src={logo}
                     alt='memories'
                     height='40px'

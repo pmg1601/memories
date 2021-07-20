@@ -23,9 +23,18 @@ export default makeStyles((theme) => ({
         fontWeight: 300,
     },
 
-    image: {
-        marginLeft: '10px',
-        marginTop: '5px',
+    textImage: {
+        [theme.breakpoints.down('sm')]: {
+            width: '50%',
+            height: 'auto',
+        },
+    },
+
+    logoImage: {
+        [theme.breakpoints.down('sm')]: {
+            width: '10%',
+            height: 'auto',
+        },
     },
 
     toolbar: {
@@ -34,6 +43,7 @@ export default makeStyles((theme) => ({
         width: '400px',
         [theme.breakpoints.down('sm')]: {
             width: 'auto',
+            flexWrap: 'wrap',
         },
     },
 
@@ -62,10 +72,16 @@ export default makeStyles((theme) => ({
     brandContainer: {
         display: 'flex',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            justifyContent: 'center',
+            gap: '10px',
+            flexDirection: 'space-around',
+        },
     },
 
     purple: {
         color: theme.palette.getContrastText(deepPurple[500]),
         backgroundColor: deepPurple[500],
+        marginLeft: '10px',
     },
 }))

@@ -50,7 +50,7 @@ const PostDetails = () => {
     return (
         <>
             <Paper
-                style={{ padding: '20px', borderRadius: '15px' }}
+                style={{ padding: '10px', borderRadius: '15px' }}
                 elevation={6}>
                 <div className={classes.card}>
                     <div className={classes.section}>
@@ -69,7 +69,7 @@ const PostDetails = () => {
                         </div>
 
                         <div>
-                            <Typography variant='h6' style={{ bottom: '10px' }}>
+                            <Typography variant='h6'>
                                 Created by: {post.name}
                             </Typography>
 
@@ -82,7 +82,7 @@ const PostDetails = () => {
                             {post.message}
                         </Typography>
 
-                        <Divider style={{ marginBottom: '20px' }} />
+                        <Divider />
                     </div>
 
                     <div className={classes.imageSection}>
@@ -134,18 +134,17 @@ const PostDetails = () => {
                     marginBlock: '50px',
                 }}
                 elevation={6}>
-                {recommendedPosts.length && (
+                <Typography
+                    gutterBottom
+                    varaint='h5'
+                    style={{ fontSize: '30px' }}>
+                    You might also like:
+                </Typography>
+
+                <Divider />
+
+                {recommendedPosts.length ? (
                     <div className={classes.section}>
-                        <Typography
-                            gutterBottom
-                            varaint='h5'
-                            style={{ fontSize: '30px' }}>
-                            {' '}
-                            You might also like:{' '}
-                        </Typography>
-
-                        <Divider />
-
                         <div className={classes.recommendedPosts}>
                             {recommendedPosts
                                 .slice(0, 4)
@@ -160,7 +159,7 @@ const PostDetails = () => {
                                     }) => (
                                         <div
                                             style={{
-                                                margin: '20px',
+                                                margin: '10px',
                                                 cursor: 'pointer',
                                                 borderRadius: '10px',
                                                 padding: '10px',
@@ -208,6 +207,10 @@ const PostDetails = () => {
                                 )}
                         </div>
                     </div>
+                ) : (
+                    <Typography gutterBottom style={{ marginBlock: '20px' }}>
+                        There are no recommendations!
+                    </Typography>
                 )}
             </Paper>
         </>

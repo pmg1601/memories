@@ -4,10 +4,8 @@ export default makeStyles((theme) => ({
     media: {
         display: 'block',
         margin: '10px auto',
-        margin: '0 auto',
         borderRadius: '20px',
         width: '90%',
-        // maxHeight: '600px',
     },
 
     card: {
@@ -42,6 +40,7 @@ export default makeStyles((theme) => ({
 
     recommendedPosts: {
         display: 'flex',
+
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',
         },
@@ -50,7 +49,6 @@ export default makeStyles((theme) => ({
     recommendedPostsImage: {
         display: 'block',
         margin: '10px auto',
-        // marginRight: 'auto',
         width: '90%',
         borderRadius: '10px',
         boxShadow: '0px 0px 5px 0px gray',
@@ -75,20 +73,31 @@ export default makeStyles((theme) => ({
     },
 
     commentsInnerContainer: {
+        boxShadow: '0px 0px 5px 0px gray',
+        borderRadius: '10px',
+        padding: '10px',
         flex: '1',
-        height: '200px',
-        overflowY: 'auto',
         marginRight: '30px',
+
+        [theme.breakpoints.down('sm')]: {
+            marginBottom: '10px',
+            marginRight: '0px',
+        },
+    },
+
+    commentsSection: {
+        overflowY: 'auto',
+        height: 'auto',
+        maxHeight: '200px',
     },
 
     userCommentLoginMessage: {
-        borderLeft: '1px solid black',
         width: '50%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         [theme.breakpoints.down('sm')]: {
-            // flexDirection: 'column',
+            borderLeft: 'none',
             width: '100%',
         },
     },
@@ -96,7 +105,6 @@ export default makeStyles((theme) => ({
     commentsBox: {
         width: '50%',
         [theme.breakpoints.down('sm')]: {
-            // flexDirection: 'column',
             width: '100%',
         },
     },

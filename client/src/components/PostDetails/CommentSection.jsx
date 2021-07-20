@@ -31,71 +31,67 @@ const CommentSection = ({ post }) => {
     }
 
     return (
-        <div>
-            <div className={classes.commentsOuterContainer}>
-                <div className={classes.commentsInnerContainer}>
-                    <Typography
-                        gutterBottom
-                        variant='h6'
-                        style={{
-                            fontWeight: 'bold',
-                            textDecoration: 'underline',
-                        }}>
-                        Comments
-                    </Typography>
-                    <Divider />
-                    {comments.length ? (
-                        <div>
-                            {comments?.map((c, i) => (
-                                <Typography
-                                    key={i}
-                                    gutterBottom
-                                    variant='subtitle1'>
-                                    <strong>
-                                        {c.toString().split(': ')[0]}
-                                    </strong>
-                                    :{c.toString().split(':')[1]}
-                                </Typography>
-                            ))}
-                            <div ref={commentsRef} />
-                        </div>
-                    ) : (
-                        <h3>There are no comments!</h3>
-                    )}
-                </div>
-
-                {user?.result?.name ? (
-                    <div className={classes.commentsBox}>
-                        <Typography gutterBottom variant='h6'>
-                            Write a comment
-                        </Typography>
-
-                        <TextField
-                            fullWidth
-                            rows={4}
-                            variant='outlined'
-                            label='Comment'
-                            multiline
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                        />
-
-                        <Button
-                            style={{ marginTop: '10px' }}
-                            fullWidth
-                            color='primary'
-                            disabled={!comment.length}
-                            variant='contained'
-                            onClick={handleComment}>
-                            Comment
-                        </Button>
+        <div className={classes.commentsOuterContainer}>
+            <div className={classes.commentsInnerContainer}>
+                <Typography
+                    gutterBottom
+                    variant='h6'
+                    style={{
+                        fontWeight: 'bold',
+                        textDecoration: 'underline',
+                    }}>
+                    Comments
+                </Typography>
+                <Divider style={{ marginBottom: '10px' }} />
+                {comments.length ? (
+                    <div className={classes.commentsSection}>
+                        {comments?.map((c, i) => (
+                            <Typography
+                                key={i}
+                                gutterBottom
+                                variant='subtitle1'>
+                                <strong>{c.toString().split(': ')[0]}</strong>:
+                                {c.toString().split(':')[1]}
+                            </Typography>
+                        ))}
+                        <div ref={commentsRef} />
                     </div>
                 ) : (
-                    <div className={classes.userCommentLoginMessage}>
-                        Sign In To Comment On This Post!
-                    </div>
+                    <h3>There are no comments!</h3>
                 )}
             </div>
+
+            {user?.result?.name ? (
+                <div className={classes.commentsBox}>
+                    <Typography gutterBottom variant='h5'>
+                        Write a comment
+                    </Typography>
+
+                    <TextField
+                        fullWidth
+                        rows={4}
+                        variant='outlined'
+                        label='Comment'
+                        multiline
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                    />
+
+                    <Button
+                        style={{ marginTop: '10px' }}
+                        fullWidth
+                        color='primary'
+                        disabled={!comment.length}
+                        variant='contained'
+                        onClick={handleComment}>
+                        Comment
+                    </Button>
+                </div>
+            ) : (
+                <div className={classes.userCommentLoginMessage}>
+                    Sign In To Comment On This Post!
+                </div>
+            )}
         </div>
     )
 }
